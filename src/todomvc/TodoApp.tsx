@@ -38,7 +38,6 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
     event.preventDefault();
 
     var val = (ReactDOM.findDOMNode(this.refs["newField"]) as HTMLInputElement).value.trim();
-
     if (val) {
       this.props.model.addTodo(val);
       (ReactDOM.findDOMNode(this.refs["newField"]) as HTMLInputElement).value = '';

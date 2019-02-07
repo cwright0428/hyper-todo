@@ -35,7 +35,8 @@ class TodoModel implements ITodoModel {
   }
 
   public inform() {
-    Utils.store(this.key, this.todos);
+    //Utils.store(this.key, this.todos);
+    console.log(":: You have made an event happen ::", this.onChanges.length)
     this.onChanges.forEach(function (cb) { cb(); });
   }
 

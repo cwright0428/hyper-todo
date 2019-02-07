@@ -1,6 +1,6 @@
-import { Hello } from './Hello'
 import { TodoModel } from './todomvc/todoModel';
 import { TodoApp } from './todomvc/TodoApp'
+import ReactDOM = require('react-dom');
 
 /**
  * Saving some props we might use later
@@ -52,14 +52,21 @@ export function decorateTerms(Hyper, { React }) {
 
         render() {
             var model = new TodoModel('react-todos');
+            var todoApp = <TodoApp model={model} />
+
+            var renderTodoDOM = () => {
+                return (
+                    <div className='hyper-todo'>
+                        {todoApp}
+                    </div>
+                )
+            }
+
+            model.subscribe(renderTodoDOM)
 
             return (
                 React.createElement(Hyper, Object.assign({}, this.props, {
-                    customChildrenBefore: (
-                        <div className='hyper-todo'>
-                            <TodoApp model={model} />
-                        </div>
-                    )
+                    customChildrenBefore: renderTodoDOM()
                 }))
             )
         }
