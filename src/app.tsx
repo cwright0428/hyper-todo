@@ -52,7 +52,7 @@ export function decorateTerms(Hyper, { React }) {
 
         render() {
             var model = new TodoModel('react-todos');
-            var todoApp = <TodoApp model={model} />
+            var todoApp = <TodoApp model={model} {...this.props} />
 
             var renderTodoDOM = () => {
                 return (

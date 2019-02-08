@@ -24,9 +24,11 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
 
   constructor(props : IAppProps) {
     super(props);
+
     this.state = {
       nowShowing: ALL_TODOS,
-      editing: null
+      editing: null,
+      name: "Andrew"
     };
   }
 
@@ -39,8 +41,9 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
 
     var val = (ReactDOM.findDOMNode(this.refs["newField"]) as HTMLInputElement).value.trim();
     if (val) {
-      this.props.model.addTodo(val);
       (ReactDOM.findDOMNode(this.refs["newField"]) as HTMLInputElement).value = '';
+      this.props.model.addTodo(val);
+      this.state.name = "Andrew " + Math.random().toPrecision(2)
     }
   }
 
@@ -151,7 +154,7 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
     return (
       <div>
         <header className="header">
-          <h1>todos</h1>
+          <h1>{this.state.name}</h1>
           <input
             ref="newField"
             className="new-todo"
