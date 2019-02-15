@@ -39,6 +39,45 @@ export function decorateConfig(config) {
     })
 }
 
+function doSomething(dispatch) {
+    return (todoText) => {
+        dispatch((innerDispatch, getState) => {
+            innerDispatch({
+                type: 'MY_ACTION',
+                todoText,
+                effect() { }
+            })
+        })
+    }
+}
+
+export function mapTermsDispatch(dispatch, map) {
+    map.doSomething = doSomething(dispatch)
+    return map
+}
+
+export function reduceTermGroups(state, action) {
+    switch (action.type) {
+        case 'MY_ACTION': {
+            state = state.set('newTodo', action.todoText)
+        }
+    }
+
+    return state
+}
+
+export function mapTermsState(state, map) {
+    console.log(":: Hi Andrew ::", state.newTodo)
+    return Object.assign({}, map, state.newTodo);
+}
+
+// export function getTermsProps(uid, parentProps, props) {
+//     props = Object.assign(props, {
+//         newTodo: parentProps.newTodo
+//     });
+//     return props;
+// }
+
 /**
  * The todo window needs to be put in the markup before the rest of the terminal
  * markup. It gets positioned to the right by default, however.
@@ -47,7 +86,11 @@ export function decorateTerms(Hyper, { React }) {
     return class extends React.Component {
         constructor(props) {
             super(props);
-            this.state = { }
+            //this.state = { }
+        }
+
+        tryToDoSomething() {
+            this.props.doSomething("This is my text")
         }
 
         render() {
@@ -57,7 +100,8 @@ export function decorateTerms(Hyper, { React }) {
             var renderTodoDOM = () => {
                 return (
                     <div className='hyper-todo'>
-                        {todoApp}
+                        {/* {todoApp} */}
+                        <button onClick={ e => this.tryToDoSomething() } >Click me</button>
                     </div>
                 )
             }
